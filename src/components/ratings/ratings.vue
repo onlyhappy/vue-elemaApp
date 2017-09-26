@@ -1,10 +1,7 @@
 <template>
-   <div class="rating">
-     rating
-   </div>
+  <div>你好吗？</div>
 </template>
 <script>
-export default { }
 </script>
 <style>
 </style>

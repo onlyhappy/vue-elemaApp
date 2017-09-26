@@ -28,7 +28,6 @@
         let score = Math.floor(this.score * 2) / 2
         // 是否有半星
         let hasDecimal = score % 1 !== 0
-        // 有多少个整星
         let integer = Math.floor(score)
         for (let i = 0; i < integer; i++) {
           result.push(CLSON)

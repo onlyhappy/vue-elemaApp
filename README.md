@@ -2,7 +2,6 @@
 
 > A Vue.js project
 
-## Build Setup
 
 **技术栈**
 
@@ -17,20 +16,20 @@
 
 **收获**
 
-1.了解了一个Vue项目完整的开发流程
-2.学会了组件化、模块化的实际开发模式
-3.学会使用 stylus、sass 预编译模块化的 CSS
-4.学会使用 ES6+ eslint的开发方式
-4.掌握了使用 Vue-cli 脚手架初始化Vue.js项目
-5.学会了使用 Vue-router 进行页面的路由切换
-6.学会了使用 Vue-resource 进行HTTP请求获取数据
-8.了解 webpack的打包原理，以及常见bug的处理与具体应用。
+- 1.了解了一个Vue项目完整的开发流程
+- 2.学会了组件化、模块化的实际开发模式
+- 3.学会使用 stylus、sass 预编译模块化的 CSS
+- 4.学会使用 ES6+ eslint的开发方式
+- 4.掌握了使用 Vue-cli 脚手架初始化Vue.js项目
+- 5.学会了使用 Vue-router 进行页面的路由切换
+- 6.学会了使用 Vue-resource 进行HTTP请求获取数据
+- 7.了解 webpack的打包原理，以及常见bug的处理与具体应用。
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8088
 npm run dev
 
 # build for production with minification
@@ -42,8 +41,8 @@ npm run build --report
 
 ## About
  
-源代码地址：👉[GitHub](https://github.com/onlyhappy/)
+源代码地址：👉[GitHub](https://github.com/onlyhappy/vue-elemaApp)
     
-个人网站：🔗[onlyhappy-IT技术分享](https://ithappy.cn) 
+个人网站：🔗[ITHppy-IT技术分享](http://ithappy.cn) 
 	
 GitHub：🔗[onlyhappy](https://github.com/onlyhappy) 

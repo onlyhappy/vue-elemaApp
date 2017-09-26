@@ -29,7 +29,7 @@
          <!-- 活动个数 -->
          <div v-if="seller.supports" class="support-count" @click="showDetail" >
            <span class="count">{{seller.supports.length}}个</span>
-           <i class="icon-keyboard_arrow_right">></i>
+           <i class="icon-keyboard_arrow_right"></i>
          </div>
        </div>
      </div>
@@ -38,26 +38,26 @@
      <div class="bulletion-wrapper" @click="showDetail" >
        <span class="bulletion-title"></span>
        <span class="bulletion-text">{{seller.bulletin}}</span>
-       <i class="icon-keyboard_arrow_right">></i>
+       <i class="icon-keyboard_arrow_right"></i>
      </div>
 
      <!-- 背景图片 -->
      <div class="background">
        <img :src="seller.avatar" width="100%" height="100%">
      </div>
-
+      
      <!-- 遮挡详情 -->
-     <div v-show="detailShow" class="detail">
+     <transition name="fade">
+     <div v-show="detailShow" class="detail" >
        <div class="detail-wrapper clearfix">
          <div class="detail-main">
            <h1 class="name">{{seller.name}}</h1>
-           <star :size="48" :score="seller.score"></star>
+      <!-- <star :size="48" :score="seller.score"></star> -->
          </div>
          <div class="title">
-         <div class="line"></div>
-         <div class="text">优惠信息</div>
-         <div class="line"></div>
-         </div>
+           <div class="line"></div>
+           <div class="text">优惠信息</div>
+           <div class="line"></div>
          </div>
          <ul v-if="seller.supports" class="supports">
            <li class="support-item" v-for='(item,index) in seller.supports'>
@@ -65,14 +65,25 @@
            <span class="text">{{seller.supports[index].description}}</span>
            </li>
          </ul>
-       <div class="detail-close">
+         <div class="title">
+           <div class="line"></div>
+           <div class="text">商家公告</div>
+           <div class="line"></div>
+         </div>
+         <div class="bulletin">
+           <p class="content">{{seller.bulletin}}</p>
+         </div>
+      </div>
+        <!-- 关闭按钮 -->
+       <div class="detail-close" @click="hideDetail">
          <i class="icon-close"></i>
        </div>
      </div>
+     </transition>
    </div>
 </template>
 <script type="text/ecmascript-6">
-//  import star from 'components/star/star'
+// import star from '../star/star.vue'
 export default {
   props: {
     seller: {
@@ -87,6 +98,9 @@ export default {
   methods: {
     showDetail () {
       this.detailShow = true
+    },
+    hideDetail () {
+      this.detailShow = false
     }
   },
   created () {
@@ -103,32 +117,32 @@ export default {
       -moz-osx-font-smoothing: grayscale;
     }
 
-    .header{
+    .header {
       color: #fff;
       position: relative;
       overflow:hidden;
       background-color: rgba(7, 17,27, 0.2)
     }
-    .header .content-wrapper{
+    .header .content-wrapper {
       position: relative;
       padding:24px 12px 18px 24px;
     }
-    .header .content-wrapper .avater{
+    .header .content-wrapper .avater {
       display: inline-block;
       vertical-align:top;
     }
-    .header .avater img{
+    .header .avater img {
       border-radius: 5px;
     }
     .header .content{
       display: inline-block;
       font-size: 14px;
     }
-    .header .content .title{
+    .header .content .title {
       margin: 2px 0 8px 0;
     }
 
-    .header .content .title .brand{
+    .header .content .title .brand {
      display: inline-block;
      width: 30px;
      height: 18px;
@@ -149,11 +163,11 @@ export default {
       font-weight: bold;
       line-height: 18px;
     }
-    .header .content .description{
+    .header .content .description {
       maring-bottom: 10px;
       font-size: 14px;
     }
-    .header .supports .supports-icon{
+    .content-wrapper .supports .supports-icon {
       display: inline-block;
       width: 12px;
       height: 12px;
@@ -163,29 +177,29 @@ export default {
       background-repeat: no-repeat;
       vertical-align: top;
     }
-   .header .supports .decrease {
+   .content-wrapper .supports .decrease {
       background-image: url('./img/decrease_1@2x.png');
     }
-    .header .supports .discount {
+    .content-wrapper .supports .discount {
       background-image: url('./img/discount_1@2x.png');
     }
-    .header .supports .guarantee {
+    .content-wrapper .supports .guarantee {
       background-image: url('./img/guarantee_1@2x.png');
     }
-    .header .supports .invoice {
+    .content-wrapper .supports .invoice {
       background-image: url('./img/invoice_1@2x.png');
     }
-    .header .supports .special {
+    .content-wrapper.supports .special {
       background-image: url('./img/special_1@2x.png');
     }
-    .header .supports .supports-text {
+    .content-wrapper.supports .supports-text {
       font-size: 10px;
       line-height: 12px;
     }
-    .header .content .support-count {
+    .content .support-count {
       position: absolute;
       right: 12px;
-      bottom: 18px;
+      bottom: 14px;
       padding: 0 8px;
       heght: 24px;
       line-height: 24px;
@@ -193,10 +207,11 @@ export default {
       background: rgba(0,0,0,0.2);
       text-align:center;
     }
-    .header .content .support-count .count{
+    .content .support-count .count{
       font-size: 10px;
     }
     .header .support-count .icon-keyboard_arrow_right{
+      margin-top: 4px;
       line-height: 24px;
       font-size: 14px;
     }
@@ -227,6 +242,7 @@ export default {
       position: absolute;
       font-size: 10px;
       right: 12px;
+      top: 8px;
     }
     .header .background{
       position: absolute;
@@ -243,12 +259,26 @@ export default {
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 100%; 
+      background-color: rgba(7, 17, 27, 0.8);
+      z-index: 100;    
       overflow: auto;
-      background: rgba(7, 17, 27, 0.8);
+      backdrop-filter: blur(10px);
+      transition: all 0.5s;
+    }
+    .header  .fade-enter-active {
+    transition: all .5s ease;
+    }
+    .header .fade-leave-active {
+      transition: all .5s ease;
+    }
+    .header .fade-enter, .fade-leave-active {
+      transition: all .5s ease;
+      opacity: 0;
     }
     .detail-wrapper{
       min-height: 100%;
+      width: 100%;
     }
     .detail-wrapper .detail-main {
       margin-top: 64px;
@@ -260,28 +290,30 @@ export default {
     }
     .detail-wrapper .title{
       width: 80%;
-      display: flex;
-      margin: 32px auto 24px auto;
+      display: flex; 
+      margin: 28px auto 24px auto;
     }
     .detail-wrapper .title .line{
-     flex: 1;  
+      flex: 1;  
       position: relative;
       top: -6px;
       border-bottom: 1px solid rgba(255,255,255,0.2)
     }
     .detail-wrapper .title .text{
        padding: 0 12px;
-      font-size: 14px;
+       font-size: 14px;
+       font-weight: 700;
     }
-    .detail-wrapper .supprts{
+    .detail-wrapper .supports{
       width: 80%;
       margin: 0 auto;
+      padding:0;
     }
-    .detail-wrapper .support-item{
+    .detail-wrapper .supports .support-item{
       padding: 0 12px;
-      margin-bottom:12px;
-      font-size:0;
-      &:last-child{
+      margin-bottom: 12px;
+      font-size: 0;
+      &:last-child {
         margin-bottom: 0;
       }
     }
@@ -294,20 +326,36 @@ export default {
        background-size: 16px 16px;
        background-repeat: no-repeat;
     }
-    .support-item .icon .decrease {
-      background-image: url('./img/decrease_1@2x.png');
+    .detail-wrapper .support-item .text{
+       display: inline-block;
+       line-height: 12px;
+       font-size: 12px;
+       color: #FFF;
     }
-    .support-item .icon .discount {
-      background-image: url('./img/discount_1@2x.png');
+      .support-item .decrease {
+    background-image: url('./img/decrease_2@2x.png');
+  }
+   .support-item .discount {
+    background-image: url('./img/discount_2@2x.png');
+  }
+   .support-item .guarantee {
+    background-image: url('./img/guarantee_2@2x.png');
+  }
+   .support-item .invoice {
+    background-image: url('./img/invoice_2@2x.png');
+  }
+   .support-item .special {
+    background-image: url('./img/special_2@2x.png');
+  }
+
+    .detail-wrapper .bulletin{
+      width: 80%;
+      margin: 0 auto;
     }
-    .support-item .icon .guarantee {
-      background-image: url('./img/guarantee_1@2x.png');
-    }
-    .support-item .icon .invoice {
-      background-image: url('./img/invoice_1@2x.png');
-    }
-    .support-item .icon .special {
-      background-image: url('./img/special_1@2x.png');
+    .detail-wrapper .bulletin .content{
+      padding: 0 12px;
+      line-height: 24px;
+      font-size: 12px;
     }
 
     .detail-close{
@@ -316,8 +364,6 @@ export default {
       height: 32px;
       margin: -64px auto 0 auto;
       clear: both;
-      border:1px solid red;
       font-size: 32px;
-      background:red;
     }
 </style>
