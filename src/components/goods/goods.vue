@@ -30,16 +30,23 @@
                   <span class="now">￥{{food.price}}</span>
                   <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
+
+                <div class="cartcontrol-wrapper">
+                  <cartcontrol :food="food"></cartcontrol>
+                </div>
               </div>
             </li>
           </ul>
         </li>
       </ul>
     </div>
+    <shopcart :select-foods="selectFoods" ref="shopcart" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 <script>
   import BScroll from 'better-scroll'
+  import shopcart from '../shopcart/shopcart'
+  import cartcontrol from '../cartcontrol/cartcontrol'
   const ERR_OK = 0
   export default {
     props: {
@@ -64,6 +71,17 @@
           }
         }
         return 0
+      },
+      selectFoods () {
+        let foods = []
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food)
+            }
+          })
+        })
+        return foods
       }
     },
     created () {
@@ -80,9 +98,23 @@
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     },
     methods: {
+      selectMenu (index, event) {
+        if (!event._constructed) {
+          return
+        }
+        let foodList = this.$refs.foodList
+        let el = foodList[index]
+        this.foodsScroll.scrollToElement(el, 300)
+      },
+      _drop (target) {
+        this.$refs.shopcart.drop(target)
+      },
       initScroll () {
-        this.menuScroll = new BScroll(this.$refs.menuWrapper, {})
+        this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+          click: true
+        })
         this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+          click: true,
           probeType: 3
         })
         this.foodsScroll.on('scroll', (pos) => {
@@ -99,16 +131,25 @@
           this.listHeight.push(height)
         }
       }
+    },
+    components: {
+      shopcart,
+      cartcontrol
+    },
+    events: {
+      'cart.add' (target) {
+        this._drop(target)
+      }
     }
   }
 </script>
 <style>
   .goods {
-    display: flex;
     position: absolute;
-    top: 176px;
-    bottom: 64px;
+    top: 174px;
+    bottom: 46px;
     width: 100%;
+    display: flex;
     overflow: hidden;
   }
   .goods .menu-wrapper {
@@ -123,7 +164,7 @@
     line-height: 14px;
     padding: 0 12px;
   }
-  .goods .menu-wrapper .menu-item .current{
+  .goods .menu-wrapper .current{
     position: relative;
     margin-top: -1px;
     background-color: #fff;
@@ -167,9 +208,8 @@
     background-image: url('./img/special_3@2x.png');
   }
 
-  <!-- 右边食品 -->
   .goods .foods-wrapper {
-    flex:1;
+    flex: 1;
   }
   .goods .foods-wrapper .titile {
     height: 26px;
@@ -231,5 +271,10 @@
     text-decoration: line-through;
     font-size: 10px;
     color: rgb(147,153,159);
+  }
+  .goods .food-item .cartcontrol-wrapper {
+    position: absolute;
+    right: 0;
+    bottom: 12px;
   }
 </style>

@@ -52,26 +52,29 @@
        <div class="detail-wrapper clearfix">
          <div class="detail-main">
            <h1 class="name">{{seller.name}}</h1>
-      <!-- <star :size="48" :score="seller.score"></star> -->
-         </div>
-         <div class="title">
-           <div class="line"></div>
-           <div class="text">优惠信息</div>
-           <div class="line"></div>
-         </div>
-         <ul v-if="seller.supports" class="supports">
-           <li class="support-item" v-for='(item,index) in seller.supports'>
-           <span class="icon" :class="classMap[seller.supports[index].type]"></span>
-           <span class="text">{{seller.supports[index].description}}</span>
-           </li>
-         </ul>
-         <div class="title">
-           <div class="line"></div>
-           <div class="text">商家公告</div>
-           <div class="line"></div>
-         </div>
-         <div class="bulletin">
-           <p class="content">{{seller.bulletin}}</p>
+           <div class="star-wrapper">
+              <star :size="48" :score="seller.score"></star>
+           </div>
+           <div class="title">
+             <div class="line"></div>
+             <div class="text">优惠信息</div>
+             <div class="line"></div>
+           </div>
+           <ul v-if="seller.supports" class="supports">
+             <li class="support-item" v-for='(item,index) in seller.supports'>
+             <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+             <span class="text">{{seller.supports[index].description}}</span>
+             </li>
+           </ul>
+           <div class="title">
+             <div class="line"></div>
+             <div class="text">商家公告</div>
+             <div class="line"></div>
+           </div>
+           <div class="bulletin">
+             <p class="content">{{seller.bulletin}}</p>
+           </div>
+           
          </div>
       </div>
         <!-- 关闭按钮 -->
@@ -83,7 +86,7 @@
    </div>
 </template>
 <script type="text/ecmascript-6">
-// import star from '../star/star.vue'
+import star from '../star/star'
 export default {
   props: {
     seller: {
@@ -105,6 +108,9 @@ export default {
   },
   created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  },
+  components: {
+    star
   }
 }
 </script>
@@ -121,15 +127,14 @@ export default {
       color: #fff;
       position: relative;
       overflow:hidden;
-      background-color: rgba(7, 17,27, 0.2)
+      background: rgba(7, 17, 27, 0.5);
     }
-    .header .content-wrapper {
-      position: relative;
-      padding:24px 12px 18px 24px;
-    }
+    
     .header .content-wrapper .avater {
       display: inline-block;
-      vertical-align:top;
+      font-size: 14px;
+      vertical-align: top;
+      border-radius: 2px;
     }
     .header .avater img {
       border-radius: 5px;
@@ -137,6 +142,7 @@ export default {
     .header .content{
       display: inline-block;
       font-size: 14px;
+      margin-left: 16px;
     }
     .header .content .title {
       margin: 2px 0 8px 0;
@@ -167,6 +173,11 @@ export default {
       maring-bottom: 10px;
       font-size: 14px;
     }
+    .header .content-wrapper {
+      position: relative;
+      padding: 24px 12px 18px 24px;
+      font-size: 0;
+    }
     .content-wrapper .supports .supports-icon {
       display: inline-block;
       width: 12px;
@@ -192,7 +203,7 @@ export default {
     .content-wrapper.supports .special {
       background-image: url('./img/special_1@2x.png');
     }
-    .content-wrapper.supports .supports-text {
+    .content-wrapper .supports .supports-text {
       font-size: 10px;
       line-height: 12px;
     }
@@ -230,6 +241,7 @@ export default {
       display: inline-block;
       width: 24px;
       height: 12px;
+      margin-top: 8px;
       background-size: 24px 12px;
       background-image: url('./img/bulletin@3x.png');
     }
@@ -278,17 +290,23 @@ export default {
     }
     .detail-wrapper{
       min-height: 100%;
-      width: 100%;
     }
-    .detail-wrapper .detail-main {
+    .header .detail-main {
       margin-top: 64px;
       padding-bottom: 64px;
     }
-    .detail-wrapper .detail-main .name{
+    .header .detail-main .name {
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
       line-height: 16px;
+    }
+    .header .star-wrapper {
+      margin-top: 18px;
+      padding: 2px 0;
       text-align: center;
     }
-    .detail-wrapper .title{
+    .header .detail .title{
       width: 80%;
       display: flex; 
       margin: 28px auto 24px auto;
@@ -307,7 +325,6 @@ export default {
     .detail-wrapper .supports{
       width: 80%;
       margin: 0 auto;
-      padding:0;
     }
     .detail-wrapper .supports .support-item{
       padding: 0 12px;
@@ -316,6 +333,9 @@ export default {
       &:last-child {
         margin-bottom: 0;
       }
+    }
+    .detail-wrapper .supports .support-item:last-child {
+      margin-bottom: 0;
     }
     .detail-wrapper .support-item .icon{
        display: inline-block;
@@ -352,12 +372,28 @@ export default {
       width: 80%;
       margin: 0 auto;
     }
+    /* 适配 iphone5 */
+    @media screen and (max-width: 320px) {
+      .header .detail-supports {
+        width: 90%;
+      }
+      .header .detail-text {
+        width: 90%;
+        margin: 0 auto;
+      }
+    }
     .detail-wrapper .bulletin .content{
       padding: 0 12px;
       line-height: 24px;
       font-size: 12px;
     }
-
+    .clearfix:after{
+      content: "";  
+      display: block;  
+      height: 0;  
+      clear: both;  
+      visibility: hidden;   
+    }
     .detail-close{
       position: relative;
       width: 32px;
