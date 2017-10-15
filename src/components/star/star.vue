@@ -72,8 +72,8 @@
   .star-36 .star-item {
     width: 15px;
     height: 15px;
-    margin-right: 3px;
-    background-size: 10px 10px;
+    margin-right: 6px;
+    background-size: 15px 15px;
   }
   .star-36 .last-child {
      margin-right: 0;

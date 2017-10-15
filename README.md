@@ -29,14 +29,14 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8088
+# serve with hot reload at localhost:8808
 npm run dev
 
 # build for production with minification
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
+# build for production and view the bundle analyzer report | Visit
+npm run build --report | http://localhost:8808/?id=123#/goods
 ```
 
 ## About

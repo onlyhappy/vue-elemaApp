@@ -273,7 +273,7 @@ export default {
       width: 100%;
       height: 100%; 
       background-color: rgba(7, 17, 27, 0.8);
-      z-index: 100;    
+      z-index: 100;
       overflow: auto;
       backdrop-filter: blur(10px);
       transition: all 0.5s;
