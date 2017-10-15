@@ -23,8 +23,12 @@
       </div>
       <!-- 飞行小球 -->
       <div class="ball-container">
-        <div transition="drop" v-for="ball in balls" v-show="ball.show" class="ball">
-          <div class="inner inner-hook"></div>
+        <div v-for="ball in balls">
+          <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
+          <div class="ball" v-show="ball.show">
+            <div class="inner inner-hook"></div>
+          </div>
+        </transition>
         </div>
       </div>
 
